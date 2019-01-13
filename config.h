@@ -3,9 +3,6 @@
   See config.h options at https://docs.qmk.fm/#/config_options?id=the-configh-file
 */
 
-#define COMBO_COUNT 3 // to set correcly in the end ?
-#define COMBO_TERM 800 // wait 4s before flooding the key that could combo
-
 #undef TAPPING_TERM
 #define TAPPING_TERM 120
 // https://beta.docs.qmk.fm/features/feature_advanced_keycodes#permissive-hold
