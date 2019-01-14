@@ -60,7 +60,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_ESC,          KC___,            KC___,       KC___,             KC___,             KC___,  KC___,
   KC___,           KC_B,             FR_COMM,     LT(LY_NUMB, KC_P), SFT_T(KC_O),       FR_W,   KC___,
   KC_PGUP,         FR_A,             ALT_T(KC_U), CTL_T(KC_I),       LT(LY_CH_1, KC_E), FR_M,
-  KC_PGDN,         KC_WWW_FAVORITES, KC_Y,        KC_X,              LT(LY_CH_2, KC_C), KC___,  KC___,
+  KC_PGDN,         KC___,            KC_Y,        KC_X,              LT(LY_CH_2, KC_C), KC___,  KC___,
   KC_DOWN,         KC_UP,            KC___,       KC_LEFT,           KC_RGHT,
                                                                    KC_DEL,  KC___,
                                                                             KC_HOME,
@@ -130,7 +130,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |---------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
  * |         |  Cut | Copy | Past |      |      |------|           |------|   \  |  |   |   /  |   =  |   $  |        |
  * |---------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |         |      | Undo | Redo |      | Save |      |           |      |      |  &   |   %  |   #  |   @  |        |
+ * |         |W fav | Undo | Redo |      | Save |      |           |      |      |  &   |   %  |   #  |   @  |        |
  * `---------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
  *   |       |      |      |      |      |                                       |      |      |      |      |      |
  *   `-----------------------------------'                                       `----------------------------------'
@@ -144,11 +144,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [LY_CH_2] = LAYOUT_ergodox(
   // left hand
-  KC____, KC____,     KC____,     KC____,     KC____,  KC____, KC____,
-  KC____, KC_ESC,     KC____,     LCTL(KC_F), KC_WWW_SEARCH,  KC____, KC____,
-  KC____, LCTL(KC_X), LCTL(KC_C), LCTL(KC_V), KC____,  KC____,
-  KC____, KC____,    LCTL(FR_Z), LCTL(KC_Y), KC____,  LCTL(KC_S), KC____,
-  KC____, KC____, KC____, KC____, KC____,
+  KC____, KC____,           KC____,     KC____,     KC____,        KC____, KC____,
+  KC____, KC_ESC,           KC____,     LCTL(KC_F), KC_WWW_SEARCH, KC____, KC____,
+  KC____, LCTL(KC_X),       COPY,       PAST,       KC____,        KC____,
+  KC____, KC_WWW_FAVORITES, LCTL(FR_Z), LCTL(KC_Y), KC____,        LCTL(KC_S), KC____,
+  KC____, KC____,           KC____,     KC____,     KC____,
                                                        KC____, KC____,
                                                                KC____,
                                   KC_WWW_BACK, KC_WWW_FORWARD, KC____,
@@ -254,13 +254,48 @@ const uint16_t PROGMEM fn_actions[] = {
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  static uint16_t key_timer;
+  static bool is_long_press;
   switch (keycode) {
     case COPY:
-      if (record->event.pressed) {
+      if(record->event.pressed){ // Key Down, start timer
+        key_timer = timer_read();
+      }
+      else { // key release
         // simple copy: LCTL(KC_C)
         // here, we want copy if fast press and copy+Maj if long pressed (shell copy)
+        is_long_press = timer_elapsed(key_timer) > 150;
+        if(is_long_press)
+          register_code(KC_LSHIFT);
+
+        register_code(KC_LCTRL);
+        register_code(KC_C);
+        unregister_code(KC_C);
+        unregister_code(KC_LCTRL);
+
+        if(is_long_press)
+          unregister_code(KC_LSHIFT);
       }
       return false; // Skip all further processing of this key
+    case PAST:
+      if(record->event.pressed){ // Key Down, start timer
+        key_timer = timer_read();
+      }
+      else { // key release
+        // here, we want past if fast press and past+Maj if long pressed (shell past)
+        is_long_press = timer_elapsed(key_timer) > 150;
+        if(is_long_press)
+          register_code(KC_LSHIFT);
+
+        register_code(KC_LCTRL);
+        register_code(KC_V);
+        unregister_code(KC_V);
+        unregister_code(KC_LCTRL);
+
+        if(is_long_press)
+          unregister_code(KC_LSHIFT);
+      }
+      return false;
     case HEHE:
       // SEND_STRING ("^.^"); // doesn’t work
       if (record->event.pressed) {
