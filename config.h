@@ -4,7 +4,7 @@
 */
 
 #undef TAPPING_TERM
-#define TAPPING_TERM 120
+#define TAPPING_TERM 180
 // https://beta.docs.qmk.fm/features/feature_advanced_keycodes#permissive-hold
 // #define PERMISSIVE_HOLD
 // #define RETRO_TAPPING

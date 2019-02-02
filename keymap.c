@@ -8,8 +8,10 @@
 #define LY_CH_2 8 // char 2 layer
 #define LY_NUMB 2 // symbols/numbers
 #define LY_MOUSE 3 // mouse
-#define LY_AZERTY 5 // azerty layer (only for litle games)
-#define LY_QWERTY 6 // qwerty layer (only for litle games)
+
+#define LY_GAME 5
+// #define LY_AZERTY 5 // azerty layer
+// #define LY_QWERTY 6 // qwerty layer
 
 #define KC___ KC_NO
 #define KC____ KC_TRNS
@@ -19,7 +21,10 @@ enum custom_keycodes {
   VRSN,
   COPY,
   PAST,
-  HEHE
+  HEHE,
+  UNICODE_MODE_WIN,
+  UNICODE_MODE_WINC,
+  UNICODE_MODE_LNX
 };
 
 // Unicode
@@ -36,11 +41,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Keymap 0: Basic layer
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
- * |  Esc   |      |      |      |      |      |      |           |      |      |      |      |      |      |        |
+ * |  Esc   |      |      |      |      |      |      |           |      |      |      |      |      |      | PSCREEN|
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |        |   B  |   ,  |P/Numb|O/Sft |   W  |      |           |      |   Z  |V/Sft |D/Muse|   L  |  J   |        |
- * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |  PgUp  |   A  |U/Alt |I/Ctrl| E/?1 |   M  |------|           |------|   K  | T/?1 |S/Ctrl| R/Alt|  N   |  PgUp  |
+ * |        |   B  |   ,  |P/Numb|O/Sft |   W  |  Ly- |           |      |   Z  |V/Sft |D/Muse|   L  |  J   |        |
+ * |--------+------+------+------+------+------| Game |           |      |------+------+------+------+------+--------|
+ * |  PgUp  |A/GUI |U/Alt |I/Ctrl| E/?1 |   M  |------|           |------|   K  | T/?1 |S/Ctrl| R/Alt| N/GUI|  PgUp  |
  * |--------+------+------+------+------+------|      |           |  ~Ly |------+------+------+------+------+--------|
  * |  PgDn  |      |   Y  |   X  | C/?2 | Coms |      |           | Mouse|   .  |   Q  |   G  |  H   |  F   |  PgDn  |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
@@ -57,21 +62,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [BASE] = LAYOUT_ergodox(
   // left hand
-  KC_ESC,          KC___,            LSFT(KC_TAB), KC_TAB,            KC___,             KC___,             KC___,
-  KC___,           KC_B,             FR_COMM,      LT(LY_NUMB, KC_P), SFT_T(KC_O),       FR_W,              KC___,
-  KC_PGUP,         FR_A,             ALT_T(KC_U),  CTL_T(KC_I),       LT(LY_CH_1, KC_E), FR_M,
-  KC_PGDN,         KC___,            KC_Y,         KC_X,              LT(LY_CH_2, KC_C), LCTL(KC_KP_SLASH), KC___,
-  KC_DOWN,         KC_UP,            KC___,        KC_LEFT,           KC_RGHT,
+  KC_ESC,          KC___,        LSFT(KC_TAB), KC_TAB,            KC___,             KC___,      KC___,
+  KC_F11,          KC_B,         FR_COMM,      LT(LY_NUMB, KC_P), SFT_T(KC_O),       FR_W,       TG(LY_GAME),
+  KC_PGUP,         LGUI_T(FR_A), ALT_T(KC_U),  CTL_T(KC_I),       LT(LY_CH_1, KC_E), FR_M,
+  KC_PGDN,         KC___,        KC_Y,         KC_X,              LT(LY_CH_2, KC_C), LCTL(KC_KP_SLASH), KC___,
+  KC_DOWN,         KC_UP,        KC___,        KC_LEFT,           KC_RGHT,
                                                                    KC_DEL,  KC___,
                                                                             KC_HOME,
                                                            KC_SPC, KC_BSPC, KC_END,
 
   // right hand
-  KC___,      KC___,  KC___,             KC___,              KC___,        KC___,     KC___,
-  KC___,      FR_Z,   SFT_T(KC_V),       LT(LY_MOUSE, KC_D), KC_L,         KC_J,      KC___,
-              KC_K,   LT(LY_CH_1, KC_T), CTL_T(KC_S),        ALT_T(KC_R),  KC_N,      KC_PGUP,
-  KC_FN1,     FR_DOT, LT(LY_CH_2, FR_Q), KC_G,               KC_H,         KC_F,      KC_PGDN,
-                      KC_UP,             KC_DOWN,            KC___,        KC_UP,     KC_DOWN,
+  KC___,      KC___,  KC___,             KC___,              KC___,        KC___,        KC_PSCREEN,
+  KC___,      FR_Z,   SFT_T(KC_V),       LT(LY_MOUSE, KC_D), KC_L,         KC_J,         KC_F11,
+              KC_K,   LT(LY_CH_1, KC_T), CTL_T(KC_S),        ALT_T(KC_R),  LGUI_T(KC_N), KC_PGUP,
+  KC_FN1,     FR_DOT, LT(LY_CH_2, FR_Q), KC_G,               KC_H,         KC_F,         KC_PGDN,
+                      KC_UP,             KC_DOWN,            KC___,        KC_UP,        KC_DOWN,
 
   KC___,   KC___,
   KC_PGUP,
@@ -83,11 +88,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,---------------------------------------------------.           ,--------------------------------------------------.
  * |         |      |      |      |      |      |      |           |      |      |      |      |      |      |        |
  * |---------+------+------+------+------+------+------|           |------+------+------+------+------+------+--------|
- * |         |  ^.^ |   ;  |   ^  |   è  |   `  |      |           |      |      |   [  |   ]  |      |      |        |
+ * |         |  ^.^ |   ;  |   ^  |   è  |      |      |           |      |      |   [  |   ]  |      |      |        |
  * |---------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |         |   à  |   ù  |   ’  |   é  |VerMaj|------|           |------|   €  |   (  |   )  |   <  |   >  |        |
+ * |         |   à  |   ù  |   '  |   é  |VerMaj|------|           |------|   €  |   (  |   )  |   <  |   >  | vol up |
  * |---------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |         |   ¨  |   "  |   '  |   ç  |   ?  |      |           |      |   !  |   {  |   }  |      |      |        |
+ * |         |   ¨  |   `  |   "  |   ç  |   ?  |      |           |      |   !  |   {  |   }  |   “  |   ”  | vol dow|
  * `---------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
  *   |       |      |      |      |   œ  |                                       |   :  |      |      |      |      |
  *   `-----------------------------------'                                       `----------------------------------'
@@ -102,9 +107,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [LY_CH_1] = LAYOUT_ergodox(
   // left hand
   KC____, KC____,   KC____,  KC____,     KC____,  KC____,    KC____,
-  KC____, HEHE,     FR_SCLN, FR_CIRC,    FR_EGRV, FR_GRV,    KC____,
-  KC____, FR_AGRV,  FR_UGRV, UC(APOSTR), FR_EACU, KC_CAPSLOCK,
-  KC____, FR_UMLT,  FR_QUOT, FR_APOS,    FR_CCED, FR_QUES,   KC____,
+  KC____, HEHE,     FR_SCLN, FR_CIRC,    FR_EGRV, KC____,    KC____,
+  KC____, FR_AGRV,  FR_UGRV, FR_APOS,    FR_EACU, KC_CAPSLOCK,
+  KC____, FR_UMLT,  FR_GRV,  FR_QUOT,    FR_CCED, FR_QUES,   KC____,
   KC____, KC____,   KC____,  KC____,     UC(OE),
                                                KC____, KC____,
                                                        KC____,
@@ -112,8 +117,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // right hand
   KC____, KC____,   KC____,   KC____,   KC____,         KC____,         KC____,
   KC____, KC____,   FR_LBRC, FR_RBRC,   UC(LGUILMET),   UC(RGUILMET),   KC____,
-          FR_EURO,  FR_LPRN, FR_RPRN,   FR_LESS,        FR_GRTR,        KC____,
-  KC____, FR_EXLM,  FR_LCBR, FR_RCBR,   UC(LQUOTATION), UC(RQUOTATION), KC____,
+          FR_EURO,  FR_LPRN, FR_RPRN,   FR_LESS,        FR_GRTR,        KC_VOLU,
+  KC____, FR_EXLM,  FR_LCBR, FR_RCBR,   UC(LQUOTATION), UC(RQUOTATION), KC_VOLD,
                     FR_COLN, KC____,    KC____,         KC____,         KC____,
 
   KC____, KC____,
@@ -124,47 +129,47 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Keymap: Char2 Layer
  *
  * ,---------------------------------------------------.           ,--------------------------------------------------.
- * |         |      |      |      |      |      |      |           |      |      |      |      |      |      |        |
+ * |         |      |      | W sch|      |      |      |           |      |      |      |      |      |      |        |
  * |---------+------+------+------+------+------+------|           |------+------+------+------+------+------+--------|
- * |         |  ESC |      |Search|W sch |      |      |           |      |   ~  |  _   |   *  | F11  | F12  |        |
+ * |         |  ESC | Save |Search|      |      |      |           |      |   ~  |  _   |   *  |      |      |        |
  * |---------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |         |  Cut | Copy | Past |      |      |------|           |------|   \  |  |   |   /  |   =  |   $  |        |
+ * | UC_WINC |  Cut | Copy | Past |      |      |------|           |------|   \  |  |   |   /  |   =  |   $  |        |
  * |---------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |         |W fav | Undo | Redo |      | Save |      |           |      |      |  &   |   %  |   #  |   @  |        |
+ * | UC_LNX  |W fav | Undo | Redo |      |      |      |           |      |      |  &   |   %  |   #  |   @  |        |
  * `---------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
  *   |       |      |      |      |      |                                       |      |      |      |      |      |
  *   `-----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
- *                                        |      |      |       |      |      |
+ *                                        |  F5  |      |       |      |      |
  *                                 ,------|------|------|       |------+------+------.
- *                                 |Brwser|Brwser|      |       |      |      |      |
- *                                 |  back|  next|------|       |------|      |  F5  |
- *                                 |      |      |      |       |      |      |      |
+ *                                 |Brwser|Brwser|  F12 |       |      |      |      |
+ *                                 |  back|  next|------|       |------|      |      |
+ *                                 |      |      |  F11 |       |      |      |      |
  *                                 `--------------------'       `--------------------'
  */
 [LY_CH_2] = LAYOUT_ergodox(
   // left hand
-  KC____, KC____,           KC____,     KC____,     KC____,        KC____, KC____,
-  KC____, KC_ESC,           KC____,     LCTL(KC_F), KC_WWW_SEARCH, KC____, KC____,
-  KC____, LCTL(KC_X),       COPY,       PAST,       KC____,        KC____,
-  KC____, KC_WWW_FAVORITES, LCTL(FR_Z), LCTL(KC_Y), KC____,        LCTL(KC_S), KC____,
-  KC____, KC____,           KC____,     KC____,     KC____,
-                                                       KC____, KC____,
-                                                               KC____,
-                                  KC_WWW_BACK, KC_WWW_FORWARD, KC____,
+  KC____, KC____,           KC____,     KC_WWW_SEARCH, KC____, KC____, KC____,
+  KC____, KC_ESC,           LCTL(KC_S), LCTL(KC_F),    KC____, KC____, KC____,
+  KC____, LCTL(KC_X),       COPY,       PAST,          KC____, KC____,
+  KC____, KC_WWW_FAVORITES, LCTL(FR_Z), LCTL(KC_Y),    KC____, KC____, KC____,
+  KC____, KC____,           KC____,     KC____,        KC____,
+                                                       KC_F5,  KC____,
+                                                               KC_F12,
+                                  KC_WWW_BACK, KC_WWW_FORWARD, KC_F11,
   // right hand
   KC____, KC____,   KC____,  KC____,      KC____,   KC____, KC____,
-  KC____, FR_TILD,  FR_UNDS, FR_ASTR,     KC_F11,   KC_F12, KC____,
+  KC____, FR_TILD,  FR_UNDS, FR_ASTR,     KC____,   KC____, KC____,
           FR_BSLS,  FR_PIPE, KC_KP_SLASH, KC_EQL,   FR_DLR, KC____,
   KC____, KC____,   FR_AMP,  FR_PERC,     FR_HASH,  FR_AT,  KC____,
   KC____, KC____,   KC____,  KC____,      KC____,
 
   KC____, KC____,
   KC____,
-  KC____, KC____, KC_F5
+  KC____, KC____, KC____
 ),
 
-/* Keymap 2: Numbers Layer
+/* Keymap: Numbers Layer
  *
  * ,---------------------------------------------------.           ,--------------------------------------------------.
  * |         |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |           |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |        |
@@ -181,7 +186,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                        |      |      |       |      |      |
  *                                 ,------|------|------|       |------+------+------.
  *                                 |      |      |      |       |      |      |      |
- *                                 |   +  |   -  |------|       |------|      |      |
+ *                                 |   -  |   +  |------|       |------|      |      |
  *                                 |      |      |      |       |      |      |      |
  *                                 `--------------------'       `--------------------'
  */
@@ -194,7 +199,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC____, KC____, KC____,  KC____,      KC____,
                                                  KC____, KC____,
                                                          KC____,
-                                       FR_PLUS, FR_MINS, KC____,
+                                       FR_MINS, FR_PLUS, KC____,
   // right hand
   KC_F7,  KC_F8,   KC_F9, KC_F10,  KC_F11, KC_F12,      KC____,
   KC____, FR_ASTR, FR_7,  FR_8,    FR_9,   KC_KP_SLASH, KC____,
@@ -206,7 +211,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC____, KC____, KC____
 ),
 
-/* Keymap 2: Media and mouse keys
+/* Keymap: Media and mouse keys
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
  * |        |      |      |      |      |      |      |           |      |      |      |      |      |      |  RESET |
@@ -243,6 +248,49 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 KC____,  KC____,  KC____,  KC____,  KC____, KC____,
   TG(LY_MOUSE), KC____,  KC____,  KC____,  KC____,  KC____, KC____,
                 KC_VOLU, KC_VOLD, KC_MUTE, KC____,  KC____,
+  KC____, KC____,
+  KC____,
+  KC____, KC____, KC____
+),
+
+/* Keymap: Game
+ *
+ * ,--------------------------------------------------.           ,--------------------------------------------------.
+ * |        |      |      | Lock |      |      |      |           |      |      |      |      |      |      |        |
+ * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
+ * |        |   G  |  Esc |  up  | Enter|      | Ly-  |           |      |      |      |      |      |      |        |
+ * |--------+------+------+------+------+------|  Out |           |      |------+------+------+------+------+--------|
+ * |        | Lock | left | down | right|  C   |------|           |------|      |      |      |      |      |        |
+ * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
+ * |        |      |   L  |   D  |   R  |      |      |           |      |      |      |      |      |      |        |
+ * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
+ *   |      |      |      |      |Screen|                                       |      |      |      |      |      |
+ *   `----------------------------------'                                       `----------------------------------'
+ *                                        ,-------------.       ,-------------.
+ *                                        |  Tab |      |       |      |      |
+ *                                 ,------|------|------|       |------+------+------.
+ *                                 |      |      |  Maj |       |      |      |      |
+ *                                 |  F   |   X  |------|       |------|      |      |
+ *                                 |      |      |  Maj |       |      |      |      |
+ *                                 `--------------------'       `--------------------'
+ */
+
+[LY_GAME] = LAYOUT_ergodox(
+  // left handtmk_cored
+  KC____,  KC____,  KC____,  KC_LOCK, KC____,   KC____, KC____,
+  KC____,  KC_ESC,  KC_ESC,  KC_UP,   KC_ENT,   KC____, TG(LY_GAME),
+  KC_VOLU, KC_LOCK, KC_LEFT, KC_DOWN, KC_RGHT,  KC_C,
+  KC_VOLD, KC____,  KC_L,    KC_D,    KC_R,     KC____, KC____,
+  KC____,  KC____,  KC____,  KC_PSCREEN,  LGUI(KC_PSCREEN),
+                                            KC_TAB, KC____,
+                                                  KC_LSHIFT,
+                                      KC_F, KC_X, KC_LSHIFT,
+  // right hand
+  KC____, KC____,  KC____,  KC____,  KC____,  KC____, KC____,
+  KC____, KC____,  KC____,  KC____,  KC____,  KC____, KC____,
+          KC____,  KC____,  KC____,  KC____,  KC____, KC____,
+  KC____, KC____,  KC____,  KC____,  KC____,  KC____, KC____,
+          KC____,  KC____,  KC____,  KC____,  KC____,
   KC____, KC____,
   KC____,
   KC____, KC____, KC____
@@ -316,11 +364,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         unregister_code(KC_SPC);
       }
       return false;
-    // case KC_ENTER:
-    //   if (record->event.pressed) {
-    //   }
-    //   return true;  // Let QMK send the enter press/release events
-    //   return false; // Skip all further processing of this key
+
+    case UNICODE_MODE_WIN:
+      if (record->event.pressed) {
+        set_unicode_input_mode(UC_WIN);
+      }
+      return false;
+    case UNICODE_MODE_WINC:
+      if (record->event.pressed) {
+        set_unicode_input_mode(UC_WINC);
+      }
+      return false;
+    case UNICODE_MODE_LNX:
+      if (record->event.pressed) {
+        set_unicode_input_mode(UC_LNX);
+      }
+      return false;
+
     default:
       return true; // Process all other keycodes normally
   }
@@ -354,20 +414,20 @@ uint32_t layer_state_set_user(uint32_t state) {
         // ergodox_right_led_3_on();
         break;
       case 4:
-        ergodox_right_led_1_on();
+        // ergodox_right_led_1_on();
         break;
       case 5:
-        ergodox_right_led_1_on();
-        ergodox_right_led_3_on();
+        // ergodox_right_led_1_on();
+        // ergodox_right_led_3_on();
         break;
       case 6:
-        ergodox_right_led_1_on();
-        ergodox_right_led_2_on();
+        // ergodox_right_led_1_on();
+        // ergodox_right_led_2_on();
         break;
       case 7:
-        ergodox_right_led_1_on();
-        ergodox_right_led_2_on();
-        ergodox_right_led_3_on();
+        // ergodox_right_led_1_on();
+        // ergodox_right_led_2_on();
+        // ergodox_right_led_3_on();
         break;
       case 8:
         // ergodox_right_led_3_on();
