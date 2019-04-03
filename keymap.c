@@ -22,6 +22,7 @@ enum custom_keycodes {
   COPY,
   PAST,
   HEHE,
+  DOUBLE_TAP_GRAVE,
   UNICODE_MODE_WIN,
   UNICODE_MODE_WINC,
   UNICODE_MODE_LNX
@@ -33,7 +34,7 @@ enum custom_keycodes {
 #define LGUILMET 0x00AB // « (not working)
 #define RGUILMET 0x00BB // »
 #define LYOLO  0x2E04 // ⸄
-#define RYOLO 0x2E05 //
+#define RYOLO 0x2E05 // ⸅
 #define LQUOTATION 0x201C // “
 #define RQUOTATION 0x201D // ”
 #define OE 0x0153 // œ
@@ -108,11 +109,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [LY_CH_1] = LAYOUT_ergodox(
   // left hand
-  KC____, KC____,   KC____,  KC____,     KC____,  KC____,    KC____,
-  KC____, HEHE,     FR_SCLN, FR_CIRC,    FR_EGRV, KC____,    KC____,
-  KC____, FR_AGRV,  FR_UGRV, FR_APOS,    FR_EACU, KC_CAPSLOCK,
-  KC____, FR_UMLT,  FR_GRV,  FR_QUOT,    FR_CCED, FR_QUES,   KC____,
-  KC____, KC____,   KC____,  KC____,     UC(OE),
+  KC____, KC____,   KC____,           KC____,     KC____,  KC____,    KC____,
+  KC____, HEHE,     FR_SCLN,          FR_CIRC,    FR_EGRV, KC____,    KC____,
+  KC____, FR_AGRV,  FR_UGRV,          FR_APOS,    FR_EACU, KC_CAPSLOCK,
+  KC____, FR_UMLT,  DOUBLE_TAP_GRAVE, FR_QUOT,    FR_CCED, FR_QUES,   KC____,
+  KC____, KC____,   KC____,           KC____,     UC(OE),
                                                KC____, KC____,
                                                        KC____,
                                        KC____, KC____, KC____,
@@ -364,6 +365,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         unregister_code(FR_CIRC);
         register_code(KC_SPC);
         unregister_code(KC_SPC);
+      }
+      return false;
+    case DOUBLE_TAP_GRAVE:
+      if (record->event.pressed) {
+        // double FR_GRV: `
+        register_code(KC_ALGR);
+
+        register_code(KC_7);
+        unregister_code(KC_7);
+        register_code(KC_7);
+        unregister_code(KC_7);
+
+        unregister_code(KC_ALGR);
       }
       return false;
 
