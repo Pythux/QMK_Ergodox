@@ -52,7 +52,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------|      |           |  ~Ly |------+------+------+------+------+--------|
  * |  PgDn  |      |   Y  |   X  | C/?2 | Coms |      |           | Mouse|   .  |   Q  |   G  |  H   |  F   |  PgDn  |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   | Down |  Up  |      | Left | Right|                                       |  Up  | Down |      |  Up  | Down |
+ *   | Down |  Up  |      | Up  |  Down |                                       | Left |Right |      |  Up  | Down |
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
  *                                        |  Del |      |       |      |      |
@@ -66,13 +66,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [BASE] = LAYOUT_ergodox(
   // left hand
   KC_ESC,          KC___,        LSFT(KC_TAB), KC_TAB,            KC___,             KC___,      KC___,
-  KC_F11,          KC_B,         FR_COMM,      LT(LY_NUMB, KC_P), SFT_T(KC_O),       FR_W,       TG(LY_GAME),
-  KC_PGUP,         LGUI_T(FR_A), ALT_T(KC_U),  CTL_T(KC_I),       LT(LY_CH_1, KC_E), FR_M,
-  KC_PGDN,         KC___,        KC_Y,         KC_X,              LT(LY_CH_2, KC_C), LCTL(KC_KP_SLASH), KC___,
-  KC_DOWN,         KC_UP,        KC___,        KC_LEFT,           KC_RGHT,
+  KC___,           KC_B,         FR_COMM,      LT(LY_NUMB, KC_P), SFT_T(KC_O),       FR_W,       TG(LY_GAME),
+  KC_UP,           LGUI_T(FR_A), ALT_T(KC_U),  CTL_T(KC_I),       LT(LY_CH_1, KC_E), FR_M,
+  KC_DOWN,         KC___,        KC_Y,         KC_X,              LT(LY_CH_2, KC_C), LCTL(KC_KP_SLASH), KC___,
+  KC___,           KC___,        KC___,        KC_LEFT,           KC_RGHT,
                                                                    KC_DEL,  KC___,
                                                                             KC_HOME,
-                                                           KC_SPC, KC_BSPC, KC_END,
+                                                    MEH_T(KC_SPC), KC_BSPC, LCA_T(KC_END),
 
   // right hand
   KC___,      KC___,  KC___,             KC___,              KC___,        KC___,        KC_PSCREEN,
