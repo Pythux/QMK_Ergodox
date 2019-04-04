@@ -21,23 +21,83 @@ enum custom_keycodes {
   VRSN,
   COPY,
   PAST,
-  HEHE,
   DOUBLE_TAP_GRAVE,
-  UNICODE_MODE_WIN,
-  UNICODE_MODE_WINC,
-  UNICODE_MODE_LNX
+  // UNICODE_MODE_WIN,
+  // UNICODE_MODE_WINC,
+  // UNICODE_MODE_LNX
 };
 
-// Unicode
+// Unicode used with UC(STAR)  up to 0x7FFF
 #define STAR 0x2605 // ★
 #define APOSTR 0x2019 // ’
 #define LGUILMET 0x00AB // « (not working)
 #define RGUILMET 0x00BB // »
 #define LYOLO  0x2E04 // ⸄
 #define RYOLO 0x2E05 // ⸅
+#define CHECK 0x2713 // ✓
 #define LQUOTATION 0x201C // “
 #define RQUOTATION 0x201D // ”
 #define OE 0x0153 // œ
+
+// used with X(STAR)  up to 0x10FFFF
+// enum unicode_names {
+//   SNEK,
+//   STAR,
+//   APOSTR,
+//   LGUILMET,
+//   RGUILMET,
+//   LYOLO,
+//   RYOLO,
+//   CHECK,
+//   LQUOTATION,
+//   RQUOTATION,
+//   OE
+// };
+
+// const uint32_t PROGMEM unicode_map[] = {
+//     [SNEK]  = 0x1F40D, // 🐍
+//     [STAR] = 0x2605, // ★
+//     [APOSTR] = 0x2019, // ’
+//     [LGUILMET] = 0x00AB, // « (not working)
+//     [RGUILMET] = 0x00BB, // »
+//     [LYOLO] =  0x2E04, // ⸄
+//     [RYOLO] = 0x2E05, // ⸅
+//     [CHECK] = 0x2713, // ✓
+//     [LQUOTATION] = 0x201C, // “
+//     [RQUOTATION] = 0x201D, // ”
+//     [OE] = 0x0153 // œ
+// };
+
+//Tap Dance Declarations
+enum tap_dance {
+  TD_SEARCH_SEARCHALL = 0,
+  TD_HEHE_ETC = 1
+};
+
+// FR_SCLN, UC(CHECK)
+void dance_hehe_etc (qk_tap_dance_state_t *state, void *user_data) {
+    switch (state->count) {
+        case 1:
+            send_unicode_hex_string("5E 2E 5E");
+            break;
+        case 2:
+            send_unicode_hex_string("2713");
+            break;
+        case 3:
+            send_unicode_hex_string("0028 30CE 0CA0 75CA 0CA0 0029 30CE 5F61 253B 2501 253B");
+            break;
+        default:
+            break;
+    }
+}
+
+//Tap Dance Definitions
+qk_tap_dance_action_t tap_dance_actions[] = {
+  //Tap once for Search, twice for Shift Search
+  [TD_SEARCH_SEARCHALL] = ACTION_TAP_DANCE_DOUBLE(LCTL(KC_F), LSFT(LCTL(KC_F))),
+  [TD_HEHE_ETC] = ACTION_TAP_DANCE_FN(dance_hehe_etc), // FR_SCLN, UC(CHECK)
+// Other declarations would go here, separated by commas, if you have them
+};
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -109,19 +169,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [LY_CH_1] = LAYOUT_ergodox(
   // left hand
-  KC____, KC____,   KC____,           KC____,     KC____,  KC____,    KC____,
-  KC____, HEHE,     FR_SCLN,          FR_CIRC,    FR_EGRV, KC____,    KC____,
-  KC____, FR_AGRV,  FR_UGRV,          FR_APOS,    FR_EACU, KC_CAPSLOCK,
-  KC____, FR_UMLT,  DOUBLE_TAP_GRAVE, FR_QUOT,    FR_CCED, FR_QUES,   KC____,
-  KC____, KC____,   KC____,           KC____,     UC(OE),
+  KC____, KC____,          KC____,           KC____,     KC____,  KC____,    KC____,
+  KC____, TD(TD_HEHE_ETC), FR_SCLN,          FR_CIRC,    FR_EGRV, KC____,    KC____,
+  KC____, FR_AGRV,         FR_UGRV,          FR_APOS,    FR_EACU, KC_CAPSLOCK,
+  KC____, FR_UMLT,         DOUBLE_TAP_GRAVE, FR_QUOT,    FR_CCED, FR_QUES,   KC____,
+  KC____, KC____,          KC____,           KC____,     UC(OE),
                                                KC____, KC____,
                                                        KC____,
                                        KC____, KC____, KC____,
   // right hand
   KC____, KC____,   KC____,   KC____,   KC____,         KC____,         KC____,
-  KC____, KC____,   FR_LBRC, FR_RBRC,   UC(LYOLO),      UC(RYOLO),      KC____,
+  KC____, KC____,   FR_LBRC, FR_RBRC,   UC(LYOLO),       UC(RYOLO),      KC____,
           FR_EURO,  FR_LPRN, FR_RPRN,   FR_LESS,        FR_GRTR,        KC_VOLU,
-  KC____, FR_EXLM,  FR_LCBR, FR_RCBR,   UC(LQUOTATION), UC(RQUOTATION), KC_VOLD,
+  KC____, FR_EXLM,  FR_LCBR, FR_RCBR,   UC(LQUOTATION),  UC(RQUOTATION), KC_VOLD,
                     FR_COLN, KC____,    KC____,         KC____,         KC____,
 
   KC____, KC____,
@@ -152,11 +212,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [LY_CH_2] = LAYOUT_ergodox(
   // left hand
-  KC____, KC____,           KC____,     KC_WWW_SEARCH, KC____, KC____, KC____,
-  KC____, KC_ESC,           LCTL(KC_S), LCTL(KC_F),    KC____, KC____, KC____,
-  KC____, LCTL(KC_X),       COPY,       PAST,          KC____, KC____,
-  KC____, KC_WWW_FAVORITES, LCTL(FR_Z), LCTL(KC_Y),    KC____, KC____, KC____,
-  KC____, KC____,           KC____,     KC____,        KC____,
+  KC____, KC____,           KC____,     KC_WWW_SEARCH,           KC____, KC____, KC____,
+  KC____, KC_ESC,           LCTL(KC_S), TD(TD_SEARCH_SEARCHALL), KC____, KC____, KC____,
+  KC____, LCTL(KC_X),       COPY,       PAST,                    KC____, KC____,
+  KC____, KC_WWW_FAVORITES, LCTL(FR_Z), LCTL(KC_Y),              KC____, KC____, KC____,
+  KC____, KC____,           KC____,     KC____,                  KC____,
                                                        KC_F5,  KC____,
                                                                KC_F12,
                                   KC_WWW_BACK, KC_WWW_FORWARD, KC_F11,
@@ -347,26 +407,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           unregister_code(KC_LSHIFT);
       }
       return false;
-    case HEHE:
-      // SEND_STRING ("^.^"); // doesn’t work
-      if (record->event.pressed) {
-        register_code(FR_CIRC);
-        unregister_code(FR_CIRC);
-        register_code(KC_SPC);
-        unregister_code(KC_SPC);
-
-        // FR_DOT:
-        register_code(KC_LSFT);
-        register_code(FR_SCLN);
-        unregister_code(FR_SCLN);
-        unregister_code(KC_LSFT);
-
-        register_code(FR_CIRC);
-        unregister_code(FR_CIRC);
-        register_code(KC_SPC);
-        unregister_code(KC_SPC);
-      }
-      return false;
     case DOUBLE_TAP_GRAVE:
       if (record->event.pressed) {
         // double FR_GRV: `
@@ -381,21 +421,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
 
-    case UNICODE_MODE_WIN:
-      if (record->event.pressed) {
-        set_unicode_input_mode(UC_WIN);
-      }
-      return false;
-    case UNICODE_MODE_WINC:
-      if (record->event.pressed) {
-        set_unicode_input_mode(UC_WINC);
-      }
-      return false;
-    case UNICODE_MODE_LNX:
-      if (record->event.pressed) {
-        set_unicode_input_mode(UC_LNX);
-      }
-      return false;
+    // case UNICODE_MODE_WIN:
+    //   if (record->event.pressed) {
+    //     set_unicode_input_mode(UC_WIN);
+    //   }
+    //   return false;
+    // case UNICODE_MODE_WINC:
+    //   if (record->event.pressed) {
+    //     set_unicode_input_mode(UC_WINC);
+    //   }
+    //   return false;
+    // case UNICODE_MODE_LNX:
+    //   if (record->event.pressed) {
+    //     set_unicode_input_mode(UC_LNX);
+    //   }
+    //   return false;
 
     default:
       return true; // Process all other keycodes normally
@@ -404,7 +444,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 // Runs just one time when the keyboard initializes.
 void matrix_init_user(void) {
-    set_unicode_input_mode(UC_LNX);
+    // set_unicode_input_mode(UC_LNX);
 };
 
 // Runs whenever there is a layer state change.
