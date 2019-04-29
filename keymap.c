@@ -444,7 +444,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 // Runs just one time when the keyboard initializes.
 void matrix_init_user(void) {
-    // set_unicode_input_mode(UC_LNX);
+    set_unicode_input_mode(UC_LNX);
 };
 
 // Runs whenever there is a layer state change.
