@@ -172,7 +172,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC____, KC____,          KC____,           KC____,     KC____,  KC____,    KC____,
   KC____, TD(TD_HEHE_ETC), FR_SCLN,          FR_CIRC,    FR_EGRV, KC____,    KC____,
   KC____, FR_AGRV,         FR_UGRV,          FR_APOS,    FR_EACU, KC_CAPSLOCK,
-  KC____, FR_UMLT,         DOUBLE_TAP_GRAVE, FR_QUOT,    FR_CCED, FR_QUES,   KC____,
+  KC____, FR_UMLT,         DOUBLE_TAP_GRAVE, FR_QUOT,    FR_CCED, FR_EXLM,   KC____,
   KC____, KC____,          KC____,           KC____,     UC(OE),
                                                KC____, KC____,
                                                        KC____,
@@ -181,7 +181,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC____, KC____,   KC____,   KC____,   KC____,         KC____,         KC____,
   KC____, KC____,   FR_LBRC, FR_RBRC,   UC(LYOLO),       UC(RYOLO),      KC____,
           FR_EURO,  FR_LPRN, FR_RPRN,   FR_LESS,        FR_GRTR,        KC_VOLU,
-  KC____, FR_EXLM,  FR_LCBR, FR_RCBR,   UC(LQUOTATION),  UC(RQUOTATION), KC_VOLD,
+  KC____, FR_QUES,  FR_LCBR, FR_RCBR,   UC(LQUOTATION),  UC(RQUOTATION), KC_VOLD,
                     FR_COLN, KC____,    KC____,         KC____,         KC____,
 
   KC____, KC____,
