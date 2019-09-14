@@ -70,21 +70,36 @@ enum custom_keycodes {
 
 //Tap Dance Declarations
 enum tap_dance {
-  TD_SEARCH_SEARCHALL = 0,
-  TD_HEHE_ETC = 1
+  TD_SEARCH_SEARCHALL,
+  TD_HEHE_ETC,
+  TD_CODE_INSERT
 };
 
-// FR_SCLN, UC(CHECK)
 void dance_hehe_etc (qk_tap_dance_state_t *state, void *user_data) {
     switch (state->count) {
         case 1:
-            send_unicode_hex_string("5E 2E 5E");
+            send_unicode_hex_string("5E 2E 5E"); // ^.^
             break;
         case 2:
-            send_unicode_hex_string("2713");
+            send_unicode_hex_string("2713"); // ✓
             break;
         case 3:
-            send_unicode_hex_string("0028 30CE 0CA0 75CA 0CA0 0029 30CE 5F61 253B 2501 253B");
+            send_unicode_hex_string("0028 30CE 0CA0 75CA 0CA0 0029 30CE 5F61 253B 2501 253B"); // (ノÀݜÀ)ノ彡┻━┻
+            break;
+        default:
+            break;
+    }
+}
+void dance_code_insertion (qk_tap_dance_state_t *state, void *user_data) {
+    switch (state->count) {
+        case 1:
+            SEND_STRING("i;port IPython");
+            // _delay_ms(800);
+            register_code(KC_ESC);
+            unregister_code(KC_ESC);
+            register_code(KC_ENT);
+            unregister_code(KC_ENT);
+            SEND_STRING("IPython<e;bed5-");
             break;
         default:
             break;
@@ -95,8 +110,9 @@ void dance_hehe_etc (qk_tap_dance_state_t *state, void *user_data) {
 qk_tap_dance_action_t tap_dance_actions[] = {
   //Tap once for Search, twice for Shift Search
   [TD_SEARCH_SEARCHALL] = ACTION_TAP_DANCE_DOUBLE(LCTL(KC_F), LSFT(LCTL(KC_F))),
-  [TD_HEHE_ETC] = ACTION_TAP_DANCE_FN(dance_hehe_etc), // FR_SCLN, UC(CHECK)
-// Other declarations would go here, separated by commas, if you have them
+
+  [TD_HEHE_ETC] = ACTION_TAP_DANCE_FN(dance_hehe_etc),
+  [TD_CODE_INSERT] = ACTION_TAP_DANCE_FN(dance_code_insertion),
 };
 
 
@@ -125,14 +141,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [BASE] = LAYOUT_ergodox(
   // left hand
-  KC_ESC,       KC___,        LSFT(KC_TAB), KC_TAB,            KC___,             KC___,      KC___,
-  KC_F11,       KC_B,         FR_COMM,      LT(LY_NUMB, KC_P), SFT_T(KC_O),       FR_W,       TG(LY_GAME),
-  KC_PGUP,      LGUI_T(FR_A), ALT_T(KC_U),  CTL_T(KC_I),       LT(LY_CH_1, KC_E), FR_M,
-  KC_PGDN,      KC___,        KC_Y,         KC_X,              LT(LY_CH_2, KC_C), LCTL(KC_KP_SLASH), KC___,
-  KC_DOWN,      KC_UP,        KC___,        KC_LEFT,           KC_RGHT,
-                                                                   KC_DEL,  KC___,
-                                                                            KC_HOME,
-                                                    MEH_T(KC_SPC), KC_BSPC, LCA_T(KC_END),
+  KC_ESC,       KC___,              LSFT(KC_TAB), KC_TAB,            KC___,             KC___,      KC___,
+  KC_F11,       KC_B,               FR_COMM,      LT(LY_NUMB, KC_P), SFT_T(KC_O),       FR_W,       TG(LY_GAME),
+  KC_PGUP,      LGUI_T(FR_A),       ALT_T(KC_U),  CTL_T(KC_I),       LT(LY_CH_1, KC_E), FR_M,
+  KC_PGDN,      TD(TD_CODE_INSERT), KC_Y,         KC_X,              LT(LY_CH_2, KC_C), LCTL(KC_KP_SLASH), KC___,
+  KC_DOWN,      KC_UP,              KC___,        KC_LEFT,           KC_RGHT,
+                                                                     KC_DEL,  KC___,
+                                                                              KC_HOME,
+                                                      MEH_T(KC_SPC), KC_BSPC, LCA_T(KC_END),
 
   // right hand
   KC___,      KC___,  KC___,             KC___,              KC___,        KC___,        KC_PSCREEN,
@@ -483,9 +499,6 @@ uint32_t layer_state_set_user(uint32_t state) {
       case 7:
         // ergodox_right_led_1_on();
         // ergodox_right_led_2_on();
-        // ergodox_right_led_3_on();
-        break;
-      case 8:
         // ergodox_right_led_3_on();
         break;
       default:
