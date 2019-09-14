@@ -125,11 +125,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [BASE] = LAYOUT_ergodox(
   // left hand
-  KC_ESC,          KC___,        LSFT(KC_TAB), KC_TAB,            KC___,             KC___,      KC___,
-  KC___,           KC_B,         FR_COMM,      LT(LY_NUMB, KC_P), SFT_T(KC_O),       FR_W,       TG(LY_GAME),
-  KC_UP,           LGUI_T(FR_A), ALT_T(KC_U),  CTL_T(KC_I),       LT(LY_CH_1, KC_E), FR_M,
-  KC_DOWN,         KC___,        KC_Y,         KC_X,              LT(LY_CH_2, KC_C), LCTL(KC_KP_SLASH), KC___,
-  KC___,           KC___,        KC___,        KC_LEFT,           KC_RGHT,
+  KC_ESC,       KC___,        LSFT(KC_TAB), KC_TAB,            KC___,             KC___,      KC___,
+  KC_F11,       KC_B,         FR_COMM,      LT(LY_NUMB, KC_P), SFT_T(KC_O),       FR_W,       TG(LY_GAME),
+  KC_PGUP,      LGUI_T(FR_A), ALT_T(KC_U),  CTL_T(KC_I),       LT(LY_CH_1, KC_E), FR_M,
+  KC_PGDN,      KC___,        KC_Y,         KC_X,              LT(LY_CH_2, KC_C), LCTL(KC_KP_SLASH), KC___,
+  KC_DOWN,      KC_UP,        KC___,        KC_LEFT,           KC_RGHT,
                                                                    KC_DEL,  KC___,
                                                                             KC_HOME,
                                                     MEH_T(KC_SPC), KC_BSPC, LCA_T(KC_END),
@@ -172,7 +172,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC____, KC____,          KC____,           KC____,     KC____,  KC____,    KC____,
   KC____, TD(TD_HEHE_ETC), FR_SCLN,          FR_CIRC,    FR_EGRV, KC____,    KC____,
   KC____, FR_AGRV,         FR_UGRV,          FR_APOS,    FR_EACU, KC_CAPSLOCK,
-  KC____, FR_UMLT,         DOUBLE_TAP_GRAVE, FR_QUOT,    FR_CCED, FR_EXLM,   KC____,
+  KC____, FR_UMLT,         DOUBLE_TAP_GRAVE, FR_QUOT,    FR_CCED, FR_QUES,   KC____,
   KC____, KC____,          KC____,           KC____,     UC(OE),
                                                KC____, KC____,
                                                        KC____,
@@ -181,7 +181,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC____, KC____,   KC____,   KC____,   KC____,         KC____,         KC____,
   KC____, KC____,   FR_LBRC, FR_RBRC,   UC(LYOLO),       UC(RYOLO),      KC____,
           FR_EURO,  FR_LPRN, FR_RPRN,   FR_LESS,        FR_GRTR,        KC_VOLU,
-  KC____, FR_QUES,  FR_LCBR, FR_RCBR,   UC(LQUOTATION),  UC(RQUOTATION), KC_VOLD,
+  KC____, FR_EXLM,  FR_LCBR, FR_RCBR,   UC(LQUOTATION),  UC(RQUOTATION), KC_VOLD,
                     FR_COLN, KC____,    KC____,         KC____,         KC____,
 
   KC____, KC____,
@@ -321,7 +321,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,--------------------------------------------------.           ,--------------------------------------------------.
  * |        |      |      |      |      |      |      |           |      |      |      |      |      |      |        |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |        |Screen|   L  |  up  |   F  |A(Tab)| Ly-  |           |      |      |      |      |      |      |        |
+ * |        |Screen|   L  |  up  | Sift |A(Tab)| Ly-  |           |      |      |      |      |      |      |        |
  * |--------+------+------+------+------+------|  Out |           |      |------+------+------+------+------+--------|
  * |        |      | left | down | right|  Tab |------|           |------|      |      |      |      |      |        |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
@@ -333,21 +333,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                        |   H  |   I  |       |      |      |
  *                                 ,------|------|------|       |------+------+------.
  *                                 |      |      |   J  |       |      |      |      |
- *                                 |   A  |   X  |------|       |------|      |      |
+ *                                 | space|   X  |------|       |------|      |      |
  *                                 |      |      | Lock |       |      |      |      |
  *                                 `--------------------'       `--------------------'
  */
 
 [LY_GAME] = LAYOUT_ergodox(
   // left handtmk_cored
-  KC____,  KC____,           KC____,  KC____,     KC____,   KC____,       KC____,
-  KC____,  LGUI(KC_PSCREEN), KC_L,    KC_UP,      KC_F,     LALT(KC_TAB), TG(LY_GAME),
-  KC_VOLU, KC____,           KC_LEFT, KC_DOWN,    KC_RGHT,  KC_TAB,
-  KC_VOLD, KC____,           KC_D,    KC_ESC,     KC_ENT,   KC____,       KC____,
+  KC____,  KC____,           KC____,  KC____,     KC____,    KC____,       KC____,
+  KC____,  LGUI(KC_PSCREEN), KC_L,    KC_UP,      KC_LSHIFT, LALT(KC_TAB), TG(LY_GAME),
+  KC_VOLU, KC____,           KC_LEFT, KC_DOWN,    KC_RGHT,   KC_TAB,
+  KC_VOLD, KC____,           KC_D,    KC_ESC,     KC_ENT,    KC____,       KC____,
   KC____,  KC____,           KC____,  KC____,     KC____,
                                             KC_H, KC_I,
                                                   KC_J,
-                                      FR_A, KC_X, KC_LOCK,
+                                      KC_SPC, KC_X, KC_LOCK,
   // right hand
   KC____, KC____,  KC____,  KC____,  KC____,  KC____, KC____,
   KC____, KC____,  KC____,  KC____,  KC____,  KC____, KC____,
