@@ -216,26 +216,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |---------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
  * |         |W fav | Undo | Redo |      |      |      |           |      |      |  &   |   %  |   #  |   @  |        |
  * `---------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |       |      |      |      |      |                                       |      |      |      |      |      |
- *   `-----------------------------------'                                       `----------------------------------'
+ *   |       |      |      |Brw bk|Brw nxt|                                       |      |      |      |      |      |
+ *   `------------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
  *                                        |  F5  |      |       |      |      |
  *                                 ,------|------|------|       |------+------+------.
- *                                 |Brwser|Brwser|  F12 |       |      |      |      |
- *                                 |  back|  next|------|       |------|      |      |
+ *                                 |      |      |  F12 |       |      |      |      |
+ *                                 |Enter |      |------|       |------|      |      |
  *                                 |      |      |  F11 |       |      |      |      |
  *                                 `--------------------'       `--------------------'
  */
 [LY_CH_2] = LAYOUT_ergodox(
   // left hand
-  KC____, KC____,           KC____,     KC_WWW_SEARCH,           KC____, KC____, KC____,
-  KC____, KC_ESC,           LCTL(KC_S), TD(TD_SEARCH_SEARCHALL), KC____, KC____, KC____,
-  KC____, LCTL(KC_X),       COPY,       PAST,                    KC____, KC____,
-  KC____, KC_WWW_FAVORITES, LCTL(FR_Z), LCTL(KC_Y),              KC____, KC____, KC____,
-  KC____, KC____,           KC____,     KC____,                  KC____,
+  KC____, KC____,           KC____,      KC_WWW_SEARCH,           KC____, KC____, KC____,
+  KC____, KC_ESC,           LCTL(KC_S),  TD(TD_SEARCH_SEARCHALL), KC____, KC____, KC____,
+  KC____, LCTL(KC_X),       COPY,        PAST,                    KC____, KC____,
+  KC____, KC_WWW_FAVORITES, LCTL(FR_Z),  LCTL(KC_Y),              KC____, KC____, KC____,
+  KC____, KC____,           KC_WWW_BACK, KC_WWW_FORWARD,                  KC____,
                                                        KC_F5,  KC____,
                                                                KC_F12,
-                                  KC_WWW_BACK, KC_WWW_FORWARD, KC_F11,
+                                               KC_ENT, KC____, KC_F11,
   // right hand
   KC____, KC____,   KC____,  KC____,      KC____,   KC____, KC____,
   KC____, FR_TILD,  FR_UNDS, FR_ASTR,     KC____,   KC____, KC____,
