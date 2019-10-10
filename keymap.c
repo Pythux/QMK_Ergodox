@@ -332,7 +332,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC____, KC____, KC____
 ),
 
-/* Keymap: Game
+/* Keymap: Game (SoT)
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
  * |        |      |      |      |      |      |      |           |      |      |      |      |      |      |        |
@@ -354,16 +354,59 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                 `--------------------'       `--------------------'
  */
 
+// [LY_GAME] = LAYOUT_ergodox(
+//   // left handtmk_cored
+//   KC____,  KC____,           KC____,  KC____,     KC____,    KC____,       KC____,
+//   KC____,  LGUI(KC_PSCREEN), KC_L,    KC_UP,      KC_LSHIFT, LALT(KC_TAB), TG(LY_GAME),
+//   KC_VOLU, KC____,           KC_LEFT, KC_DOWN,    KC_RGHT,   KC_TAB,
+//   KC_VOLD, KC____,           KC_D,    KC_ESC,     KC_ENT,    KC____,       KC____,
+//   KC____,  KC____,           KC____,  KC____,     KC____,
+//                                             KC_H, KC_I,
+//                                                   KC_J,
+//                                       KC_SPC, KC_X, KC_LOCK,
+//   // right hand
+//   KC____, KC____,  KC____,  KC____,  KC____,  KC____, KC____,
+//   KC____, KC____,  KC____,  KC____,  KC____,  KC____, KC____,
+//           KC____,  KC____,  KC____,  KC____,  KC____, KC____,
+//   KC____, KC____,  KC____,  KC____,  KC____,  KC____, KC____,
+//           KC____,  KC____,  KC____,  KC____,  KC____,
+//   KC____, KC____,
+//   KC____,
+//   KC____, KC____, KC____
+// ),
+
+/* Keymap: Game
+ *
+ * ,--------------------------------------------------.           ,--------------------------------------------------.
+ * |        |      |      |   U  |      |      |      |           |      |      |      |      |      |      |        |
+ * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
+ * |        |Screen|   L  |  up  |   R  |   S  | Ly-  |           |      |      |      |      |      |      |        |
+ * |--------+------+------+------+------+------|  Out |           |      |------+------+------+------+------+--------|
+ * |        |   A  | left | down | right|   M  |------|           |------|      |      |      |      |      |        |
+ * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
+ * |        |   Q  |   B  |  D   |  C   |A(Tab)|      |           |      |      |      |      |      |      |        |
+ * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
+ *   |      |      |      |      |  Tab |                                       |      |      |      |      |      |
+ *   `----------------------------------'                                       `----------------------------------'
+ *                                        ,-------------.       ,-------------.
+ *                                        |   H  |   I  |       |      |      |
+ *                                 ,------|------|------|       |------+------+------.
+ *                                 |      |      |   J  |       |      |      |      |
+ *                                 | space|   X  |------|       |------|      |      |
+ *                                 |      |      | Lock |       |      |      |      |
+ *                                 `--------------------'       `--------------------'
+ */
+
 [LY_GAME] = LAYOUT_ergodox(
   // left handtmk_cored
-  KC____,  KC____,           KC____,  KC____,     KC____,    KC____,       KC____,
-  KC____,  LGUI(KC_PSCREEN), KC_L,    KC_UP,      KC_LSHIFT, LALT(KC_TAB), TG(LY_GAME),
-  KC_VOLU, KC____,           KC_LEFT, KC_DOWN,    KC_RGHT,   KC_TAB,
-  KC_VOLD, KC____,           KC_D,    KC_ESC,     KC_ENT,    KC____,       KC____,
-  KC____,  KC____,           KC____,  KC____,     KC____,
+  KC____,  KC____,           KC____,  KC_U,     KC____,    KC____,       KC____,
+  KC____,  LGUI(KC_PSCREEN), KC_L,    KC_UP,      KC_R,      KC_S,         TG(LY_GAME),
+  KC_VOLU, FR_A,             KC_LEFT, KC_DOWN,    KC_RGHT,   FR_M,
+  KC_VOLD, FR_Q,             KC_B,    KC_D,       KC_C,      LALT(KC_TAB), KC____,
+  KC____,  KC____,           KC____,  KC____,     KC_TAB,
                                             KC_H, KC_I,
                                                   KC_J,
-                                      KC_SPC, KC_X, KC_LOCK,
+                                    KC_SPC, KC_X, KC_LOCK,
   // right hand
   KC____, KC____,  KC____,  KC____,  KC____,  KC____, KC____,
   KC____, KC____,  KC____,  KC____,  KC____,  KC____, KC____,
