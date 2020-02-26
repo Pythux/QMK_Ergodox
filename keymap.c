@@ -95,11 +95,11 @@ void dance_code_insertion (qk_tap_dance_state_t *state, void *user_data) {
         case 1:
             SEND_STRING("i;port IPython");
             // _delay_ms(800);
-            register_code(KC_ESC);
-            unregister_code(KC_ESC);
-            register_code(KC_ENT);
-            unregister_code(KC_ENT);
-            SEND_STRING("IPython<e;bed5-");
+            // register_code(KC_ESC);
+            // unregister_code(KC_ESC);
+            // register_code(KC_ENT);
+            // unregister_code(KC_ENT);
+            SEND_STRING(", IPython<e;bed5-");
             break;
         default:
             break;
@@ -380,9 +380,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,--------------------------------------------------.           ,--------------------------------------------------.
  * |        |      |      |   U  |      |      |      |           |      |      |      |      |      |      |        |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |        |Screen|   L  |  up  |   R  |   S  | Ly-  |           |      |      |      |      |      |      |        |
+ * |        |Screen|   L  |  up  |   R  | Ctrl | Ly-  |           |      |      |      |      |      |      |        |
  * |--------+------+------+------+------+------|  Out |           |      |------+------+------+------+------+--------|
- * |        |   A  | left | down | right|   M  |------|           |------|      |      |      |      |      |        |
+ * |        |   A  | left | down | right| Shift|------|           |------|      |      |      |      |      |        |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
  * |        |   Q  |   B  |  D   |  C   |A(Tab)|      |           |      |      |      |      |      |      |        |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
@@ -400,8 +400,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [LY_GAME] = LAYOUT_ergodox(
   // left handtmk_cored
   KC____,  KC____,           KC____,  KC_U,     KC____,    KC____,       KC____,
-  KC____,  LGUI(KC_PSCREEN), KC_L,    KC_UP,      KC_R,      KC_S,         TG(LY_GAME),
-  KC_VOLU, FR_A,             KC_LEFT, KC_DOWN,    KC_RGHT,   FR_M,
+  KC____,  LGUI(KC_PSCREEN), KC_L,    KC_UP,      KC_R,      KC_LCTL,         TG(LY_GAME),
+  KC_VOLU, FR_A,             KC_LEFT, KC_DOWN,    KC_RGHT,   KC_LSFT,
   KC_VOLD, FR_Q,             KC_B,    KC_D,       KC_C,      LALT(KC_TAB), KC____,
   KC____,  KC____,           KC____,  KC____,     KC_TAB,
                                             KC_H, KC_I,
